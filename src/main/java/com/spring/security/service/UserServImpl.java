@@ -1,5 +1,6 @@
 package com.spring.security.service;
 
+import com.spring.security.dto.UserAuthResponseDto;
 import com.spring.security.dto.UserLoginDto;
 import com.spring.security.dto.UserResponseDto;
 import com.spring.security.dto.UserSignupDto;
@@ -68,6 +69,12 @@ public class UserServImpl implements UserServ{
     @Override
     public UserResponseDto getUserById(int id) throws UserNotFoundException {
         return modelMapper.map(userRepo.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found")), UserResponseDto.class);
+    }
+
+    @Override
+    public UserAuthResponseDto getUserByUsername(String username) throws UserNotFoundException {
+        User user = userRepo.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User with username " + username + " not found"));
+        return modelMapper.map(user, UserAuthResponseDto.class);
     }
 
 

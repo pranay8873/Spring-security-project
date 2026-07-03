@@ -1,5 +1,6 @@
 package com.spring.security.service;
 
+import com.spring.security.dto.UserAuthResponseDto;
 import com.spring.security.dto.UserLoginDto;
 import com.spring.security.dto.UserResponseDto;
 import com.spring.security.dto.UserSignupDto;
@@ -13,4 +14,5 @@ public interface UserServ {
     void deleteuser(String email) throws UserNotFoundException;
     UserResponseDto getUserByEmail(String email) throws UserNotFoundException;
     UserResponseDto getUserById(int id) throws UserNotFoundException;
+    UserAuthResponseDto getUserByUsername(String username) throws UserNotFoundException;
 }
