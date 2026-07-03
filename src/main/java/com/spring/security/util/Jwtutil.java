@@ -28,7 +28,7 @@ public class Jwtutil {
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
     }
-
+    // Generating access token
     public String generateAccessToken(String username, String role) {
 
         Map<String, Object> claims = new HashMap<>();
@@ -44,13 +44,16 @@ public class Jwtutil {
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+    // extracting user nsme from token
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
+    // generic claim extractor
     public <T> T extractClaim(String token, Function<Claims, T> resolver) {
         final Claims claims = extractAllClaims(token);
         return resolver.apply(claims);
     }
+    // extract all claims
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
@@ -58,12 +61,15 @@ public class Jwtutil {
                 .parseClaimsJws(token)
                 .getBody();
     }
+    // extract expiration
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
+    // token expiry
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
+    // token validation
     public boolean validateToken(String token, String username) {
         return extractUsername(token).equals(username) && !isTokenExpired(token);
     }
