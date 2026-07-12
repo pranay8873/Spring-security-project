@@ -7,6 +7,8 @@ import com.spring.security.dto.UserSignupDto;
 import com.spring.security.exception.UserExistException;
 import com.spring.security.exception.UserNotFoundException;
 
+import java.util.List;
+
 public interface UserServ {
     UserResponseDto saveUser(UserSignupDto userSignupDto) throws UserExistException;
     UserResponseDto login(UserLoginDto userLoginDto) throws UserNotFoundException;
@@ -15,4 +17,5 @@ public interface UserServ {
     UserResponseDto getUserByEmail(String email) throws UserNotFoundException;
     UserResponseDto getUserById(int id) throws UserNotFoundException;
     UserAuthResponseDto getUserByUsername(String username) throws UserNotFoundException;
+    List<UserResponseDto> getAllUsers();
 }
