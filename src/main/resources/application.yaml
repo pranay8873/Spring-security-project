@@ -3,7 +3,7 @@ spring:
     name: security
 
   datasource:
-    url: jdbc:mysql://localhost:3306/spring-security?createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/spring-security-2?createDatabaseIfNotExist=true
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -16,11 +16,11 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.MySQLDialect
-jwt:
-  validity:
-    accessToken: 86400000
-    refreshToken: 2592000000
-  secret: jwt-secret-code
+#jwt:
+#  validity:
+#    accessToken: 86400000
+#    refreshToken: 2592000000
+#  secret: jwt-secret-code
 
 server:
   port: 8080

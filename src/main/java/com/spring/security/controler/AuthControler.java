@@ -20,7 +20,7 @@ public class AuthControler {
         return ResponseEntity.ok(registeredUser);
     }
     @GetMapping("/login")
-    public ResponseEntity<UserResponseDto> loginUser(@RequestParam UserLoginDto userLoginDto) {
+    public ResponseEntity<UserResponseDto> loginUser(@RequestBody UserLoginDto userLoginDto) {
         UserResponseDto loggedInUser = userService.login(userLoginDto);
         return ResponseEntity.ok(loggedInUser);
     }
