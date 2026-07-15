@@ -1,9 +1,10 @@
 package com.spring.security.controler;
 
+import com.spring.security.dto.UserAuthResponseDto;
 import com.spring.security.dto.UserLoginDto;
 import com.spring.security.dto.UserResponseDto;
 import com.spring.security.dto.UserSignupDto;
-import com.spring.security.service.UserServImpl;
+import com.spring.security.service.userServImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,15 +13,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/users/auth")
 @RequiredArgsConstructor
 public class AuthControler {
-    private final UserServImpl userService;
+    private final userServImpl userService;;
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponseDto> registerUser(@RequestBody UserSignupDto userSignupDto) {
+    public ResponseEntity<UserAuthResponseDto> registerUser(@RequestBody UserSignupDto userSignupDto) {
         UserResponseDto registeredUser = userService.saveUser(userSignupDto);
         return ResponseEntity.ok(registeredUser);
     }
     @GetMapping("/login")
-    public ResponseEntity<UserResponseDto> loginUser(@RequestBody UserLoginDto userLoginDto) {
+    public ResponseEntity<UserAuthResponseDto> loginUser(@RequestBody UserLoginDto userLoginDto) {
         UserResponseDto loggedInUser = userService.login(userLoginDto);
         return ResponseEntity.ok(loggedInUser);
     }

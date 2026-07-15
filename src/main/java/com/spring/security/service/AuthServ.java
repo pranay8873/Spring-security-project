@@ -8,7 +8,7 @@ import com.spring.security.exception.UserExistException;
 import com.spring.security.exception.UserNotFoundException;
 
 public interface AuthServ {
- UserResponseDto registerUser(UserSignupDto userSignupDto) throws UserExistException;
- UserResponseDto loginuser(UserLoginDto userLoginDto) throws UserNotFoundException;
+ UserAuthResponseDto registerUser(UserSignupDto userSignupDto) throws UserExistException;
+ UserAuthResponseDto loginuser(UserLoginDto userLoginDto) throws UserNotFoundException;
 
 }
