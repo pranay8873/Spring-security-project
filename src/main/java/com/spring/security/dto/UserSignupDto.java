@@ -11,7 +11,6 @@ public class UserSignupDto {
     private String username;
     private String email;
     private String password;
-
     private Role role;
     private Gender gender;;
 
