@@ -2,27 +2,23 @@ package com.spring.security.entity;
 
 import com.spring.security.enums.Gender;
 import com.spring.security.enums.Role;
-import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "users")
+
+@Document(collation = "users")
 @Data
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private String id;
     private String username;
     private String email;
     private String password;
-    @Enumerated(EnumType.STRING)
     private Gender gender;
-    @Enumerated(EnumType.STRING)
     private Role role;
-    @Column(name = "created_at")
     private LocalDateTime createdAt;
-    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 }

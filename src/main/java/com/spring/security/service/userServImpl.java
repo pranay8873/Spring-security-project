@@ -10,7 +10,7 @@ import com.spring.security.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import com.spring.security.entity.User;
 import org.modelmapper.ModelMapper;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,38 +18,34 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserServImpl implements UserServ{
+public class userServImpl implements UserServ{
     private final UserRepo userRepo;
+
     private final ModelMapper modelMapper;
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     @Override
-    public UserResponseDto saveUser(UserSignupDto userSignupDto) throws UserExistException {
-        if(userRepo.findByEmail(userSignupDto.getEmail()).isPresent()){
-            throw new UserExistException("User with email "+userSignupDto.getEmail()+" already exists");
-        }
-        else {
+    public UserResponseDto saveUser(UserSignupDto userSignupDto) throws UserExistException  {
+
             User user = modelMapper.map(userSignupDto,User.class);
             user.setCreatedAt(LocalDateTime.now());
             user.setUpdatedAt(null);
-//            user.setPassword(passwordEncoder.encode(userSignupDto.getPassword()));
-            user.setPassword(userSignupDto.getPassword());
+            user.setPassword(passwordEncoder.encode(userSignupDto.getPassword()));
+//            user.setPassword(userSignupDto.getPassword());
           return modelMapper.map(userRepo.save(user),UserResponseDto.class);
         }
 
-    }
+
 
     @Override
     public UserResponseDto login(UserLoginDto userLoginDto) throws UserNotFoundException {
         User user = userRepo.findByUsername(userLoginDto.getUsername()).orElseThrow(() -> new UserNotFoundException("User with username " + userLoginDto.getUsername() + " not found"));
-        if(!user.getPassword().equals(userLoginDto.getPassword())){
-            throw new UserNotFoundException("Invalid password");
-        }
+
         return modelMapper.map(user, UserResponseDto.class);
     }
 
     @Override
-    public UserResponseDto updateuser(int id,UserSignupDto UserSignupDto) throws UserNotFoundException {
-        User user = userRepo.findByUsername(UserSignupDto.getUsername()).orElseThrow(() -> new UserNotFoundException("User with username " + UserSignupDto.getUsername() + " not found"));
+    public UserResponseDto updateuser(String id,UserSignupDto UserSignupDto) throws UserNotFoundException {
+        User user = userRepo.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
         user.setPassword(UserSignupDto.getPassword());
         user.setUpdatedAt(LocalDateTime.now());
         user.setRole(UserSignupDto.getRole());
@@ -70,7 +66,7 @@ public class UserServImpl implements UserServ{
     }
 
     @Override
-    public UserResponseDto getUserById(int id) throws UserNotFoundException {
+    public UserResponseDto getUserById(String id) throws UserNotFoundException {
         return modelMapper.map(userRepo.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found")), UserResponseDto.class);
     }
 
